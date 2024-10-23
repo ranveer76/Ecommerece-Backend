@@ -1,0 +1,4 @@
+.vercel
+envprocess.js
+.env
+node_modules

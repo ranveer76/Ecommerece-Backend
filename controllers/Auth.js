@@ -25,10 +25,10 @@ exports.signup=async(req,res)=>{
         const token=generateToken(secureInfo)
 
         res.cookie('token',token,{
-            sameSite:process.env.PRODUCTION==='true'?"None":'Lax',
-            maxAge:new Date(Date.now() + (parseInt(process.env.COOKIE_EXPIRATION_DAYS * 24 * 60 * 60 * 1000))),
+            sameSite:process.env.PRODUCTION || 'false' ==='true'?"None":'Lax',
+            maxAge:new Date(Date.now() + (parseInt((process.env.COOKIE_EXPIRATION_DAYS || 30) * 24 * 60 * 60 * 1000))),
             httpOnly:true,
-            secure:process.env.PRODUCTION==='true'?true:false
+            secure:process.env.PRODUCTION || 'false' ==='true'?true:false
         })
 
         res.status(201).json(sanitizeUser(createdUser))
@@ -50,10 +50,10 @@ exports.login=async(req,res)=>{
             const token=generateToken(secureInfo)
 
             res.cookie('token',token,{
-                sameSite:process.env.PRODUCTION==='true'?"None":'Lax',
-                maxAge:new Date(Date.now() + (parseInt(process.env.COOKIE_EXPIRATION_DAYS * 24 * 60 * 60 * 1000))),
+                sameSite:process.env.PRODUCTION || 'flase' ==='true'?"None":'Lax',
+                maxAge:new Date(Date.now() + (parseInt((process.env.COOKIE_EXPIRATION_DAYS || 30) * 24 * 60 * 60 * 1000))),
                 httpOnly:true,
-                secure:process.env.PRODUCTION==='true'?true:false
+                secure:process.env.PRODUCTION || 'flase' ==='true'?true:false
             })
             return res.status(200).json(sanitizeUser(existingUser))
         }
@@ -114,7 +114,7 @@ exports.resendOtp=async(req,res)=>{
         const otp=generateOTP()
         const hashedOtp=await bcrypt.hash(otp,10)
 
-        const newOtp=new Otp({user:req.body.user,otp:hashedOtp,expiresAt:Date.now()+parseInt(process.env.OTP_EXPIRATION_TIME)})
+        const newOtp=new Otp({user:req.body.user,otp:hashedOtp,expiresAt:Date.now()+parseInt(process.env.OTP_EXPIRATION_TIME || 120000)})
         await newOtp.save()
 
         await sendMail(existingUser.email,`OTP Verification for Your MERN-AUTH-REDUX-TOOLKIT Account`,`Your One-Time Password (OTP) for account verification is: <b>${otp}</b>.</br>Do not share this OTP with anyone for security reasons`)
@@ -141,7 +141,7 @@ exports.forgotPassword=async(req,res)=>{
 
         const hashedToken=await bcrypt.hash(passwordResetToken,10)
 
-        newToken=new PasswordResetToken({user:isExistingUser._id,token:hashedToken,expiresAt:Date.now() + parseInt(process.env.OTP_EXPIRATION_TIME)})
+        newToken=new PasswordResetToken({user:isExistingUser._id,token:hashedToken,expiresAt:Date.now() + parseInt(process.env.OTP_EXPIRATION_TIME || 120000)})
         await newToken.save()
 
         await sendMail(isExistingUser.email,'Password Reset Link for Your MERN-AUTH-REDUX-TOOLKIT Account',`<p>Dear ${isExistingUser.name},
@@ -203,9 +203,9 @@ exports.logout=async(req,res)=>{
     try {
         res.cookie('token',{
             maxAge:0,
-            sameSite:process.env.PRODUCTION==='true'?"None":'Lax',
+            sameSite:process.env.PRODUCTION || 'false' ==='true'?"None":'Lax',
             httpOnly:true,
-            secure:process.env.PRODUCTION==='true'?true:false
+            secure:process.env.PRODUCTION || 'false' ==='true'?true:false
         })
         res.status(200).json({message:'Logout successful'})
     } catch (error) {

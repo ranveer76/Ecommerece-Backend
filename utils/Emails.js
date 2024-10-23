@@ -19,7 +19,7 @@ async function sendMail(receiverEmail, subject, body) {
 
     console.log("Email sent successfully!");
   } catch (error) {
-    console.error("Error sending email:", error);
+    console.error("Error sending email:", process.env.EMAIL);
   }
 }
 

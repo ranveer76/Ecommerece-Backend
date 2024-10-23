@@ -9,7 +9,7 @@ exports.verifyToken=async(req,res,next)=>{
             return res.status(204).json({message:"Token missing, please login again"})
         }
 
-        const decodedInfo=jwt.verify(token,process.env.SECRET_KEY)
+        const decodedInfo=jwt.verify(token,process.env.SECRET_KEY || "your-secret-key")
 
         if(decodedInfo && decodedInfo._id && decodedInfo.email){
             req.user=decodedInfo

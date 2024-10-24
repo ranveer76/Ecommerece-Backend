@@ -22,8 +22,12 @@ connectToDB()
 
 
 server.use(cors({origin:process.env.ORIGIN || "http://localhost:3000",credentials:true,exposedHeaders:['X-Total-Count'],methods:['GET','POST','PATCH','DELETE']}))
-server.use(express.json())
+server.use(express.json({
+    limit: "50mb"
+}))
 server.use(cookieParser())
+server.use(express.urlencoded({ extended: true }))
+server.use(express.static('public'))
 server.use(morgan("tiny"))
 
 server.use("/auth",authRoutes)

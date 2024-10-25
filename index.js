@@ -1,18 +1,9 @@
 require("dotenv").config()
 const express=require('express')
-const cors=require('cors')
+const cors = require('cors')
+const path = require('path')
 const morgan=require("morgan")
 const cookieParser=require("cookie-parser")
-const authRoutes=require("./routes/Auth")
-const productRoutes=require("./routes/Product")
-const orderRoutes=require("./routes/Order")
-const cartRoutes=require("./routes/Cart")
-const brandRoutes=require("./routes/Brand")
-const categoryRoutes=require("./routes/Category")
-const userRoutes=require("./routes/User")
-const addressRoutes=require('./routes/Address')
-const reviewRoutes=require("./routes/Review")
-const wishlistRoutes=require("./routes/Wishlist")
 const { connectToDB } = require("./database/db")
 
 
@@ -30,21 +21,12 @@ server.use(express.urlencoded({ extended: true }))
 server.use(express.static('public'))
 server.use(morgan("tiny"))
 
-server.use("/auth",authRoutes)
-server.use("/users",userRoutes)
-server.use("/products",productRoutes)
-server.use("/orders",orderRoutes)
-server.use("/cart",cartRoutes)
-server.use("/brands",brandRoutes)
-server.use("/categories",categoryRoutes)
-server.use("/address",addressRoutes)
-server.use("/reviews",reviewRoutes)
-server.use("/wishlist",wishlistRoutes)
-
-
+server.use("/api", require("./routes/index"))
 
 server.get("/", (req, res) => {
-    res.status(200).json({message:'running'})
+    res.status(200).json({ message: 'running' })
+}).get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'))
 })
 
 server.listen(8000, () => {

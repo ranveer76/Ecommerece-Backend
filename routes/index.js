@@ -25,7 +25,7 @@ route.use("/reviews",reviewRoutes)
 route.use("/wishlist", wishlistRoutes)
 
 route.use("*", (req, res) => {
-    res.status(404).json({ message: "404 - Not Found" });
+    res.status(404).json({ message: "404 - Api Not Found" });
 });
 
 module.exports = route

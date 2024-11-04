@@ -17,7 +17,7 @@ const logger = (req, res, next) => {
             status,
             duration: ms
         });
-        // await logData.save();
+        await logData.save();
     });
     next();
 }

@@ -35,3 +35,25 @@ exports.verifyToken=async(req,res,next)=>{
         }
     }
 }
+
+exports.setifexist = (req, res, next) => {
+    try {
+        const { token } = req.cookies
+
+        if (!token || typeof token === 'object') {
+            return next()
+        }
+
+        const decodedInfo = jwt.verify(token, process.env.SECRET_KEY || "your secret key")
+        
+        if (decodedInfo && decodedInfo._id && decodedInfo.email) {
+            req.user = decodedInfo
+            return next()
+        }
+        return next()
+    } catch (error) {
+        console.log(error);
+        return next()
+    }
+}
+

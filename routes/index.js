@@ -9,7 +9,9 @@ const categoryRoutes=require("./Category")
 const userRoutes=require("./User")
 const addressRoutes=require('./Address')
 const reviewRoutes=require("./Review")
-const wishlistRoutes=require("./Wishlist")
+const wishlistRoutes = require("./Wishlist")
+
+route.use(require("../middleware/VerifyToken").setifexist)
 
 route.use("/auth",authRoutes)
 route.use("/users",userRoutes)

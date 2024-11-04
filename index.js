@@ -2,9 +2,9 @@ require("dotenv").config()
 const express=require('express')
 const cors = require('cors')
 const path = require('path')
-const morgan=require("morgan")
 const cookieParser=require("cookie-parser")
 const { connectToDB } = require("./database/db")
+const logger = require("./middleware/logger")
 
 
 const server=express()
@@ -19,7 +19,7 @@ server.use(express.json({
 server.use(cookieParser())
 server.use(express.urlencoded({ extended: true }))
 server.use(express.static('public'))
-server.use(morgan("tiny"))
+server.use(logger)
 
 server.use("/api", require("./routes/index"))
 

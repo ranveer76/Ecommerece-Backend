@@ -10,7 +10,7 @@ exports.connectToDB = async () => {
                 socketTimeoutMS: 45000,
                 maxPoolSize: 10,
             });
-            console.log("Connected to ",process.env.MONGO_URI);
+            console.log("Connected to db");
             return;
         } catch (error) {
             console.log("Error connecting to ",process.env.MONGO_URI,", retrying...", error.message);

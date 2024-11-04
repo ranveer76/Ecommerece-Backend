@@ -23,9 +23,7 @@ server.use(logger)
 
 server.use("/api", require("./routes/index"))
 
-server.get("/", (req, res) => {
-    res.status(200).json({ message: 'running' })
-}).get("*", (req, res) => {
+server.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'))
 })
 

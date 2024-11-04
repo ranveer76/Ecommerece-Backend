@@ -1,4 +1,3 @@
-require("dotenv").config();
 const mongoose = require("mongoose");
 
 exports.connectToDB = async () => {
@@ -14,7 +13,7 @@ exports.connectToDB = async () => {
             console.log("Connected to DB");
             return;
         } catch (error) {
-            console.log("Error connecting to DB, retrying...", error.message);
+            console.log("Error connecting to ",process.env.MONGO_URI,", retrying...", error.message);
             await new Promise(res => setTimeout(res, 5000));
         }
     }

@@ -44,7 +44,7 @@ exports.setifexist = (req, res, next) => {
             return next()
         }
 
-        const decodedInfo = jwt.verify(token, process.env.SECRET_KEY || "your secret key")
+        const decodedInfo = jwt.verify(token, process.env.SECRET_KEY || "your-secret-key")
         
         if (decodedInfo && decodedInfo._id && decodedInfo.email) {
             req.user = decodedInfo

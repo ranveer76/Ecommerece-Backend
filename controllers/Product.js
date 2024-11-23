@@ -1,4 +1,3 @@
-const { Schema, default: mongoose } = require("mongoose")
 const Product=require("../models/Product")
 
 exports.create=async(req,res)=>{
@@ -33,6 +32,10 @@ exports.getAll = async (req, res) => {
 
         if(req.query.sort){
             sort[req.query.sort]=req.query.order?req.query.order==='asc'?1:-1:1
+        }
+
+        if(req.query.featured){
+            filter.featured=req.query.featured==='true'?true:false
         }
 
         if(req.query.page && req.query.limit){

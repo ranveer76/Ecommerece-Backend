@@ -43,6 +43,10 @@ const productSchema= new Schema({
     isDeleted:{
         type:Boolean,
         default:false
+    },
+    featured:{
+        type:Boolean,
+        default:false
     }
 },{timestamps:true,versionKey:false})
 

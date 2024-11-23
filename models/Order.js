@@ -25,6 +25,9 @@ const orderSchema=new Schema({
         enum:['COD','UPI','CARD'],
         required:true
     },
+    paymentReference: {
+        type: String,
+    },
     total:{
         type:Number,
         required:true

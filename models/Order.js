@@ -22,8 +22,13 @@ const orderSchema=new Schema({
     },
     paymentMode:{
         type:String,
-        enum:['COD','UPI','CARD'],
+        enum:['COD','Online'],
         required:true
+    },
+    paymentStatus:{
+        type:String,
+        enum:['Pending','Success','Failed'],
+        default: 'Pending'
     },
     paymentReference: {
         type: String,
